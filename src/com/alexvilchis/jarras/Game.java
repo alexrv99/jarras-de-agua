@@ -2,47 +2,60 @@ package com.alexvilchis.jarras;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Game {
 
-  private Jar jar4 = new Jar(0, 4, "4G");
+  private Jug jug4 = new Jug(0, 4, "4G");
 
-  private Jar jar3 = new Jar(0, 3, "3G");
+  private Jug jug3 = new Jug(0, 3, "3G");
 
-  private List<Movement> possibleMovements;
+  private List<Movement> movements;
 
-  public void play() {
+  private int targetVolume;
 
-    while (jar4.getVolume() != 2) {
-      List<Movement> possibleMovements = getPossibleMovements();
-      Movement movement = possibleMovements.get(new Random().nextInt(possibleMovements.size()));
+  void play() {
+    while (jug4.getVolume() != targetVolume) {
+      List<Movement> availableMovements = getAvailableMovements();
+      Movement movement = availableMovements.get(new Random().nextInt(availableMovements.size()));
       makeMovement(movement);
     }
-
     System.out.println("¡Eureka!");
   }
 
-  public final void makeMovement(Movement movement) {
-    int currentVolume4 = jar4.getVolume();
-    int currentVolume3 = jar3.getVolume();
+  private void makeMovement(Movement movement) {
+    int currentVolume4 = jug4.getVolume();
+    int currentVolume3 = jug3.getVolume();
     int result4 = movement.getFourfillCallback()
-        .call(currentVolume4, currentVolume3, jar3.getVolume());
+        .call(currentVolume4, currentVolume3, jug3.getVolume());
     int result3 = movement.getThreefillCallback()
-        .call(currentVolume4, currentVolume3, jar3.getVolume());
-    jar4.setVolume(result4);
-    jar3.setVolume(result3);
-    System.out.printf("(%d, %d) -> (%d, %d)\n", currentVolume4, currentVolume3, result4, result3);
+        .call(currentVolume4, currentVolume3, jug3.getVolume());
+    jug4.setVolume(result4);
+    jug3.setVolume(result3);
+    System.out.printf("Movement %s: (%d, %d) -> (%d, %d)\n", movement.getLabel(), currentVolume4,
+        currentVolume3, result4, result3);
   }
 
-  public boolean isMovementValid(Movement movement) {
-    return movement.getValidation().validate(jar4.getVolume(), jar3.getVolume());
+
+  private List<Movement> getAvailableMovements() {
+    return movements.stream()
+        .filter(movement -> movement.getValidation().validate(jug4.getVolume(), jug3.getVolume()))
+        .collect(Collectors.toList());
   }
 
-  public List<Movement> getPossibleMovements() {
-    return possibleMovements;
+  public List<Movement> getMovements() {
+    return movements;
   }
 
-  public void setPossibleMovements(List<Movement> possibleMovements) {
-    this.possibleMovements = possibleMovements;
+  public void setMovements(List<Movement> movements) {
+    this.movements = movements;
+  }
+
+  public int getTargetVolume() {
+    return targetVolume;
+  }
+
+  public void setTargetVolume(int targetVolume) {
+    this.targetVolume = targetVolume;
   }
 }

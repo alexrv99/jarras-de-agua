@@ -2,20 +2,28 @@ package com.alexvilchis.jarras;
 
 public class Movement {
 
+  private String label;
+
   private ValidationCallback validation;
 
   private FillCallback fourfillCallback;
 
   private FillCallback threefillCallback;
 
-  public Movement() {
-  }
-
-  public Movement(ValidationCallback validation, FillCallback fourfillCallback,
+  public Movement(String label, ValidationCallback validation, FillCallback fourfillCallback,
       FillCallback threefillCallback) {
+    this.label = label;
     this.validation = validation;
     this.fourfillCallback = fourfillCallback;
     this.threefillCallback = threefillCallback;
+  }
+
+  public String getLabel() {
+    return label;
+  }
+
+  public void setLabel(String label) {
+    this.label = label;
   }
 
   public FillCallback getFourfillCallback() {

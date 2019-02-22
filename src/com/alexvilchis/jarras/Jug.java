@@ -1,6 +1,6 @@
 package com.alexvilchis.jarras;
 
-public class Jar {
+public class Jug {
 
   private int volume;
 
@@ -8,7 +8,7 @@ public class Jar {
 
   private String label;
 
-  public Jar(int volume, int capacity, String label) {
+  public Jug(int volume, int capacity, String label) {
     this.volume = volume;
     this.capacity = capacity;
     this.label = label;
@@ -40,7 +40,7 @@ public class Jar {
 
   @Override
   public String toString() {
-    return "Jar{" +
+    return "Jug{" +
         "volume=" + volume +
         ", capacity=" + capacity +
         ", label='" + label + '\'' +
