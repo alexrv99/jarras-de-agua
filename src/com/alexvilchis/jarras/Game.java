@@ -27,9 +27,9 @@ public class Game {
     int currentVolume4 = jug4.getVolume();
     int currentVolume3 = jug3.getVolume();
     int result4 = movement.getFourfillCallback()
-        .call(currentVolume4, currentVolume3, jug3.getVolume());
+        .call(currentVolume4, currentVolume3);
     int result3 = movement.getThreefillCallback()
-        .call(currentVolume4, currentVolume3, jug3.getVolume());
+        .call(currentVolume4, currentVolume3);
     jug4.setVolume(result4);
     jug3.setVolume(result3);
     System.out.printf("Movement %s: (%d, %d) -> (%d, %d)\n", movement.getLabel(), currentVolume4,
