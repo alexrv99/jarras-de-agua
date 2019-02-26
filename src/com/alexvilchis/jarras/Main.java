@@ -7,6 +7,10 @@ public class Main {
     Game game = new Game();
     game.setMovements(AllMovements.getInstance());
     game.setTargetVolume(2);
+    game.setOnMovement((movement, beforeVolume4, beforeVolume3, afterVolume4, afterVolume3) ->
+        System.out.printf("Movement %s: (%d, %d) -> (%d, %d)\n", movement.getLabel(),
+            beforeVolume4, beforeVolume3, afterVolume4, afterVolume3));
+    game.setOnWin(() -> System.out.println("¡Eureka!"));
     game.play();
   }
 }

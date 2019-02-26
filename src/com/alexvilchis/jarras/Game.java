@@ -14,13 +14,17 @@ public class Game {
 
   private int targetVolume;
 
+  private MovementCallback onMovement;
+
+  private WinCallback onWin;
+
   void play() {
     while (jug4.getVolume() != targetVolume) {
       List<Movement> availableMovements = getAvailableMovements();
       Movement movement = availableMovements.get(new Random().nextInt(availableMovements.size()));
       makeMovement(movement);
     }
-    System.out.println("¡Eureka!");
+    onWin.call();
   }
 
   private void makeMovement(Movement movement) {
@@ -32,8 +36,8 @@ public class Game {
         .call(currentVolume4, currentVolume3);
     jug4.setVolume(result4);
     jug3.setVolume(result3);
-    System.out.printf("Movement %s: (%d, %d) -> (%d, %d)\n", movement.getLabel(), currentVolume4,
-        currentVolume3, result4, result3);
+
+    onMovement.call(movement, currentVolume4, currentVolume3, result4, result3);
   }
 
 
@@ -57,5 +61,21 @@ public class Game {
 
   public void setTargetVolume(int targetVolume) {
     this.targetVolume = targetVolume;
+  }
+
+  public MovementCallback getOnMovement() {
+    return onMovement;
+  }
+
+  public void setOnMovement(MovementCallback onMovement) {
+    this.onMovement = onMovement;
+  }
+
+  public WinCallback getOnWin() {
+    return onWin;
+  }
+
+  public void setOnWin(WinCallback onWin) {
+    this.onWin = onWin;
   }
 }

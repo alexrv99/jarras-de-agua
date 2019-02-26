@@ -3,7 +3,7 @@ package com.alexvilchis.jarras;
 import java.util.Arrays;
 import java.util.List;
 
-public class AllMovements {
+class AllMovements {
 
   private static List<Movement> ourInstance;
 
@@ -26,7 +26,7 @@ public class AllMovements {
             movement10);
   }
 
-  public static List<Movement> getInstance() {
+  static List<Movement> getInstance() {
     return ourInstance;
   }
 
