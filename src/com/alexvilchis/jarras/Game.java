@@ -18,7 +18,10 @@ public class Game {
 
   private WinCallback onWin;
 
+  private int moves;
+
   void play() {
+    moves = 0;
     while (jug4.getVolume() != targetVolume) {
       List<Movement> availableMovements = getAvailableMovements();
       Movement movement = availableMovements.get(new Random().nextInt(availableMovements.size()));
@@ -28,6 +31,7 @@ public class Game {
   }
 
   private void makeMovement(Movement movement) {
+    moves++;
     int currentVolume4 = jug4.getVolume();
     int currentVolume3 = jug3.getVolume();
     int result4 = movement.getFourfillCallback()
@@ -37,7 +41,7 @@ public class Game {
     jug4.setVolume(result4);
     jug3.setVolume(result3);
 
-    onMovement.call(movement, currentVolume4, currentVolume3, result4, result3);
+    onMovement.call(moves, movement, currentVolume4, currentVolume3, result4, result3);
   }
 
 
